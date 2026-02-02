@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteor | Premium Audio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Custom Animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2f2f2f;
+            border-radius: 4px;
+        }
+
+        /* Enhanced Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-up {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scale-up.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Stagger delays */
+        .delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-300 {
+            transition-delay: 0.3s;
+        }
+
+        .delay-400 {
+            transition-delay: 0.4s;
+        }
+
+        .delay-500 {
+            transition-delay: 0.5s;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #6b7280);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Title with Spotlight Effect */
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #4a5568;
+            position: relative;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+
+        .hero-title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle,
+                    #ffffff 0%,
+                    #ffffff 15%,
+                    #f8fafc 25%,
+                    #e2e8f0 40%,
+                    #cbd5e1 55%,
+                    #94a3b8 75%,
+                    #64748b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            clip-path: circle(0px at var(--x, 50%) var(--y, 50%));
+            transition: clip-path 0.1s ease;
+            filter: brightness(1.5) contrast(1.3);
+        }
+
+        .hero-title.no-transition::before {
+            transition: none;
+        }
+
+        .hero-title.active::before {
+            clip-path: circle(40px at var(--x, 50%) var(--y, 50%));
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-300 py-6 px-6 lg:px-12 flex justify-between items-center backdrop-blur-sm border-b border-transparent">
+        <div class="text-2xl font-bold tracking-tighter">Meteor</div>
+
+        <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+            <a href="#features" class="hover:text-white transition-colors">Features</a>
+            <a href="#color" class="hover:text-white transition-colors">Color</a>
+            <a href="#specs" class="hover:text-white transition-colors">Specs</a>
+            <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+
+        <a href="#pricing"
+            class="px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition-transform hover:scale-105">
+            Pre-Order
+        </a>
+    </nav>
+
+    <header class="relative min-h-screen flex flex-col justify-start items-center text-center px-4 pt-32 md:pt-40">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black z-0">
+        </div>
+
+        <div class="z-10 fade-up">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-4 hero-title" id="heroTitle"
+                data-text="Meteor">Meteor</h1>
+            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-lg">
+                Industry-leading noise cancellation and stunning minimalist design. <span
+                    class="text-cyan-400 font-semibold">Precision.</span> <span
+                    class="text-orange-400 font-semibold">Power.</span> <span
+                    class="text-purple-400 font-semibold">Purity.</span>
+            </p>
+        </div>
+
+        <div class="relative w-full max-w-4xl mt-12 z-10 fade-up delay-200">
+            <img id="hero-headphones" src="balck.png" alt="Meteor Headphones"
+                class="w-full h-auto object-contain rounded-3xl shadow-2xl shadow-white/5 mx-auto hover:scale-[1.02] transition-transform duration-700"
+                style="max-height: 500px;">
+            <div class="absolute bottom-10 right-10 text-xs text-gray-500 text-right hidden md:block">
+                SHIPS STARTING <span class="text-white font-bold">JULY 15</span><br>
+                LIMITED QUANTITIES AVAILABLE
+            </div>
+        </div>
+    </header>
+
+    <section class="py-24 px-6 md:px-12 bg-black">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative h-[600px] overflow-hidden rounded-3xl fade-left">
+                <img src="https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=2070&auto=format&fit=crop"
+                    class="absolute inset-0 w-full h-full object-cover">
+            </div>
+            <div class="fade-right">
+                <span class="text-sm font-bold text-purple-500 tracking-widest uppercase mb-2 block">Meet Meteor</span>
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                    Premium wireless headphones that blend precision, power, and comfort.
+                </h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Featuring adaptive noise cancellation, studio-level clarity, and a fit so light it disappears. Just
+                    pure audio, no distractions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 px-6 md:px-12 bg-neutral-950">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 fade-up">Every Note. Exactly As It<br>Was Meant to Be Heard.
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
+
+                <div
+                    class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl bg-neutral-900 border border-neutral-800 fade-up">
+                    <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=2065&auto=format&fit=crop"
+                        class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <div
+                            class="bg-purple-600/20 text-purple-400 px-3 py-1 rounded-full text-xs font-bold inline-block mb-3">
+                            ACTIVE NOISE CANCELLATION</div>
+                        <h3 class="text-3xl font-bold mb-2">Silence the World</h3>
+                        <p class="text-gray-400">Hybrid ANC filters out 98% of low-frequency noise.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="relative p-8 rounded-3xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between fade-up delay-100 group hover:border-neutral-700 transition-colors">
+                    <i class="ph ph-battery-charging text-5xl text-white mb-4"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">40-Hour Battery</h3>
+                        <p class="text-gray-400 text-sm">Listen for days on a single charge. 10 min charge = 4 hours
+                            play.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="relative p-8 rounded-3xl bg-neutral-900 border border-neutral-800 flex flex-col justify-between fade-up delay-200 group hover:border-neutral-700 transition-colors">
+                    <i class="ph ph-waves text-5xl text-white mb-4"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Hi-Res Audio</h3>
+                        <p class="text-gray-400 text-sm">Certified for high-resolution audio with LDAC support.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="color" class="py-24 px-6 md:px-12 bg-black overflow-hidden">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="fade-left">
+                <span class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2 block">Design & Build</span>
+                <h2 class="text-5xl font-bold mb-6">Choose your Style.</h2>
+                <p class="text-gray-400 mb-8">Minimalist aesthetic meets industrial durability.</p>
+
+                <div class="space-y-4">
+                    <p id="color-name" class="text-xl font-medium text-white">Graphite Black</p>
+                    <div class="flex gap-4">
+                        <button onclick="changeColor('black')"
+                            class="w-10 h-10 rounded-full bg-neutral-900 border-2 border-white ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                            aria-label="Black"></button>
+                        <button onclick="changeColor('silver')"
+                            class="w-10 h-10 rounded-full bg-gray-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                            aria-label="Silver"></button>
+                        <button onclick="changeColor('gold')"
+                            class="w-10 h-10 rounded-full bg-amber-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                            aria-label="Gold"></button>
+                    </div>
+
+                    <!-- Watch Demo Button -->
+                    <button onclick="openDemo()"
+                        class="mt-8 w-full flex items-center justify-center gap-2 text-white border border-white/20 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-semibold">
+                        <i class="ph ph-play-circle text-xl"></i> Watch Demo
+                    </button>
+
+                    <!-- Experience Yourself Button -->
+                    <button onclick="openExperience()"
+                        class="mt-2.5 w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full transition-colors font-semibold">
+                        <i class="ph ph-rocket-launch text-xl"></i> Experience Yourself
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative h-[500px] flex items-center justify-center scale-up">
+                <img id="product-display" src="balck.png" alt="Headphones"
+                    class="w-[400px] h-[400px] object-cover rounded-3xl drop-shadow-[0_20px_50px_rgba(255,255,255,0.1)]">
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Modal -->
+    <div id="demoModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center">
+        <div class="relative w-full max-w-6xl mx-4">
+            <!-- Video Player -->
+            <div class="relative">
+                <video id="demoVideo" class="w-full rounded-2xl shadow-2xl" controls>
+                    <source src="dyanmicvideo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Exit Button - Overlayed on video -->
+                <button onclick="closeDemo()"
+                    class="absolute top-4 right-4 bg-black/70 hover:bg-black/90 text-white px-4 py-2 rounded-full transition-all flex items-center gap-2 backdrop-blur-sm">
+                    <i class="ph ph-x text-xl"></i> Exit Demo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Experience Modal -->
+    <div id="experienceModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center">
+        <div class="relative w-full max-w-6xl mx-4">
+            <!-- Video Player -->
+            <div class="relative group">
+                <video id="experienceVideo" class="w-full rounded-2xl shadow-2xl" controls>
+                    <source
+                        src="Rick%20Astley%20-%20Never%20Gonna%20Give%20You%20Up%20(Official%20Video)%20(4K%20Remaster)%20-%20Rick%20Astley%20(1080p,%20h264).mp4"
+                        type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Title Overlay on Hover -->
+                <div
+                    class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-6 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 class="text-white text-xl font-bold">Rick Astley - Never Gonna Give You Up (Official Video)</h3>
+                    <p class="text-gray-300 text-sm mt-1">4K Remaster</p>
+                </div>
+
+                <!-- Exit Button - Overlayed on video -->
+                <button onclick="closeExperience()"
+                    class="absolute top-4 right-4 bg-black/70 hover:bg-black/90 text-white px-4 py-2 rounded-full transition-all flex items-center gap-2 backdrop-blur-sm z-10">
+                    <i class="ph ph-x text-xl"></i> Exit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <section id="specs" class="py-24 px-6 md:px-12 bg-neutral-950">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Technical Specifications</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-2">Engineered to Perform</h2>
+            </div>
+
+            <div class="border-t border-neutral-800 fade-up">
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Driver Size</span>
+                    <span class="text-white font-semibold">40mm Titanium-Coated Dynamic Drivers</span>
+                </div>
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Frequency Response</span>
+                    <span class="text-white font-semibold">10Hz - 40kHz</span>
+                </div>
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Bluetooth Version</span>
+                    <span class="text-white font-semibold">5.3 with Multipoint Connectivity</span>
+                </div>
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Noise Cancellation</span>
+                    <span class="text-white font-semibold">Hybrid ANC (up to 45dB)</span>
+                </div>
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Battery Life</span>
+                    <span class="text-white font-semibold">40h (ANC On), 60h (ANC Off)</span>
+                </div>
+                <div
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
+                    <span class="text-gray-400 font-medium">Weight</span>
+                    <span class="text-white font-semibold">260g</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12 bg-black">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-up">Loved by Audiophiles</h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-neutral-900 p-8 rounded-2xl text-left border border-neutral-800 fade-up delay-100">
+                    <div class="flex text-yellow-500 mb-4 text-sm">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-6">"These sound better than my studio monitors. The separation is
+                        incredible."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-700 rounded-full"></div>
+                        <div>
+                            <p class="font-bold text-sm">Beat Craft</p>
+                            <p class="text-xs text-gray-500">@beatcraft</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-900 p-8 rounded-2xl text-left border border-neutral-800 fade-up delay-200">
+                    <div class="flex text-yellow-500 mb-4 text-sm">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-6">"I wear them for 8 hours straight — no fatigue. The clamping force is
+                        perfect."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-700 rounded-full"></div>
+                        <div>
+                            <p class="font-bold text-sm">Emily L.</p>
+                            <p class="text-xs text-gray-500">@emilylondon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-900 p-8 rounded-2xl text-left border border-neutral-800 fade-up delay-300">
+                    <div class="flex text-yellow-500 mb-4 text-sm">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-6">"You'll hear songs you thought you knew, differently. The bass is
+                        tight, not muddy."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-700 rounded-full"></div>
+                        <div>
+                            <p class="font-bold text-sm">Marcus T.</p>
+                            <p class="text-xs text-gray-500">@marcusprod</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12 bg-neutral-950">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center fade-up">Got Questions?</h2>
+
+            <div class="space-y-4 fade-up">
+                <div class="border border-neutral-800 rounded-lg bg-black overflow-hidden">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none faq-btn">
+                        <span class="font-medium">What is the battery life with ANC on?</span>
+                        <i class="ph ph-plus text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 faq-content">
+                        <div class="px-6 pb-4 text-gray-400 text-sm">
+                            Meteor lasts up to 40 hours with Active Noise Cancellation enabled, and up to 60 hours in
+                            standard mode.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-neutral-800 rounded-lg bg-black overflow-hidden">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none faq-btn">
+                        <span class="font-medium">Can I use it wired?</span>
+                        <i class="ph ph-plus text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 faq-content">
+                        <div class="px-6 pb-4 text-gray-400 text-sm">
+                            Yes, a 3.5mm to USB-C audio cable is included in the box for high-fidelity wired listening.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-neutral-800 rounded-lg bg-black overflow-hidden">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none faq-btn">
+                        <span class="font-medium">Is it compatible with iOS and Android?</span>
+                        <i class="ph ph-plus text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 faq-content">
+                        <div class="px-6 pb-4 text-gray-400 text-sm">
+                            Absolutely. Meteor supports Fast Pair on Android and pairs seamlessly with iOS devices via
+                            standard Bluetooth settings.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-24 px-6 md:px-12 bg-black">
+        <div class="max-w-xl mx-auto text-center fade-up">
+            <span class="text-purple-500 font-bold tracking-widest uppercase text-sm">Pricing</span>
+            <h2 class="text-5xl font-bold mt-2 mb-6">Pre-order opens soon</h2>
+            <p class="text-gray-400 mb-8">Be the first to know when pricing goes live. Use the contact form below to get
+                notified.</p>
+
+            <form class="space-y-4 text-left bg-neutral-900 p-8 rounded-3xl border border-neutral-800">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Name</label>
+                    <input type="text" placeholder="Your Name"
+                        class="w-full bg-black border border-neutral-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Email</label>
+                    <input type="email" placeholder="you@example.com"
+                        class="w-full bg-black border border-neutral-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Message</label>
+                    <textarea placeholder="Tell us about your needs..." rows="4"
+                        class="w-full bg-black border border-neutral-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-500 transition-colors"></textarea>
+                </div>
+                <button type="button"
+                    class="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-gray-200 transition-colors">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
+        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
+            <div class="sticky top-0 bg-neutral-900 p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-3xl font-bold">Privacy Policy</h2>
+                <button onclick="closePrivacy()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="ph ph-x text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6 text-gray-300">
+                <p class="text-sm text-gray-500">Last updated: February 2, 2026</p>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">1. Information We Collect</h3>
+                    <p>We collect information you provide directly to us when you create an account, make a purchase, or
+                        contact us. This may include your name, email address, shipping address, and payment
+                        information.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">2. How We Use Your Information</h3>
+                    <p>We use the information we collect to process your orders, communicate with you, improve our
+                        products and services, and personalize your shopping experience.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">3. Data Security</h3>
+                    <p>We implement industry-standard security measures to protect your personal information. However,
+                        no method of transmission over the internet is 100% secure.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">4. Your Rights</h3>
+                    <p>You have the right to access, update, or delete your personal information at any time. Contact us
+                        at privacy@meteoraudio.com for assistance.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
+        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
+            <div class="sticky top-0 bg-neutral-900 p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-3xl font-bold">Terms of Service</h2>
+                <button onclick="closeTerms()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="ph ph-x text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6 text-gray-300">
+                <p class="text-sm text-gray-500">Last updated: February 2, 2026</p>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">1. Acceptance of Terms</h3>
+                    <p>By accessing and using the Meteor website and services, you accept and agree to be bound by these
+                        Terms of Service.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">2. Product Information</h3>
+                    <p>We strive to provide accurate product descriptions and pricing. However, we reserve the right to
+                        correct errors and update information without notice.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">3. Returns & Warranty</h3>
+                    <p>All Meteor products come with a 30-day return policy and a 2-year manufacturer warranty. Products
+                        must be in original condition with all accessories included.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-xl font-semibold text-white mb-3">4. Limitation of Liability</h3>
+                    <p>Meteor Audio shall not be liable for any indirect, incidental, special, or consequential damages
+                        resulting from the use or inability to use our products.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
+        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl">
+            <div class="p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-3xl font-bold">Get In Touch</h2>
+                <button onclick="closeContact()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="ph ph-x text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-6 grid md:grid-cols-2 gap-8">
+                <!-- Contact Information -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                        <div class="space-y-4 text-gray-300">
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-envelope text-purple-400 text-xl"></i>
+                                <span>support@meteoraudio.com</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-phone text-purple-400 text-xl"></i>
+                                <span>+1 (555) 123-4567</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-map-pin text-purple-400 text-xl"></i>
+                                <span>123 Audio Street, San Francisco, CA 94102</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Business Hours</h3>
+                        <div class="space-y-2 text-gray-300">
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM PST</p>
+                            <p>Saturday: 10:00 AM - 4:00 PM PST</p>
+                            <p>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="https://www.instagram.com/meteor_ffx?igsh=MTk3MmtzOGd1b3BzeQ==" target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-3 p-4 border border-neutral-800 rounded-lg hover:border-purple-500 transition-colors">
+                            <i class="ph ph-instagram-logo text-2xl"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://x.com/Courtesy77" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center gap-3 p-4 border border-neutral-800 rounded-lg hover:border-purple-500 transition-colors">
+                            <i class="ph ph-twitter-logo text-2xl"></i>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-4 border border-neutral-800 rounded-lg hover:border-purple-500 transition-colors">
+                            <i class="ph ph-facebook-logo text-2xl"></i>
+                            <span>Facebook</span>
+                        </a>
+                        <a href="https://youtube.com/@godmeteor?si=8TLhmKVeub6XtmjF" target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-3 p-4 border border-neutral-800 rounded-lg hover:border-purple-500 transition-colors">
+                            <i class="ph ph-youtube-logo text-2xl"></i>
+                            <span>YouTube</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-12 border-t border-neutral-900 px-6 text-center md:text-left bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <h3 class="text-2xl font-bold tracking-tighter">Meteor</h3>
+                <p class="text-gray-500 text-sm mt-1">Designed to Move You.</p>
+            </div>
+            <div class="flex gap-8 text-sm text-gray-400">
+                <a href="javascript:void(0)" onclick="openPrivacy()" class="hover:text-white cursor-pointer">Privacy</a>
+                <a href="javascript:void(0)" onclick="openTerms()" class="hover:text-white cursor-pointer">Terms</a>
+                <a href="javascript:void(0)" onclick="openContact()" class="hover:text-white cursor-pointer">Contact</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 text-center text-xs text-neutral-600">
+            &copy; 2026 Meteor Audio. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // 1. Scroll Animations (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-up').forEach(el => observer.observe(el));
+
+        // 2. Navbar Backdrop on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/80', 'border-white/10');
+            } else {
+                navbar.classList.remove('bg-black/80', 'border-white/10');
+            }
+        });
+
+        // 3. Color Picker Logic - Instant image change with rounded corners
+        function changeColor(color) {
+            const img = document.getElementById('product-display');
+            const heroImg = document.getElementById('hero-headphones');
+            const name = document.getElementById('color-name');
+            const btns = document.querySelectorAll('.color-btn');
+
+            // Reset borders
+            btns.forEach(btn => btn.style.borderColor = 'transparent');
+
+            // Set active border based on color clicked
+            if (color === 'black') btns[0].style.borderColor = 'white';
+            if (color === 'silver') btns[1].style.borderColor = 'white';
+            if (color === 'gold') btns[2].style.borderColor = 'white';
+
+            // Change to your local headphone images instantly
+            if (color === 'black') {
+                img.src = 'balck.png';
+                if (heroImg) heroImg.src = 'balck.png';
+                name.innerText = 'Graphite Black';
+            } else if (color === 'silver') {
+                img.src = 'silver.png';
+                if (heroImg) heroImg.src = 'silver.png';
+                name.innerText = 'Sterling Silver';
+            } else if (color === 'gold') {
+                img.src = 'gold.png';
+                if (heroImg) heroImg.src = 'gold.png';
+                name.innerText = 'Champagne Gold';
+            }
+        }
+
+        // Initialize first button active (black) with local image
+        document.querySelectorAll('.color-btn')[0].style.borderColor = 'white';
+        document.getElementById('product-display').src = 'balck.png';
+        const heroHeadphones = document.getElementById('hero-headphones');
+        if (heroHeadphones) heroHeadphones.src = 'balck.png';
+
+        // 5. Hero Title Spotlight Effect - Silver Shine
+        const heroTitle = document.getElementById('heroTitle');
+        if (heroTitle) {
+            let isActive = false;
+
+            heroTitle.addEventListener('mouseenter', function (e) {
+                isActive = true;
+                const rect = this.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                // Disable transition, set position, then enable transition and activate
+                this.classList.add('no-transition');
+                this.style.setProperty('--x', x + '%');
+                this.style.setProperty('--y', y + '%');
+
+                // Force browser to apply the position change
+                void this.offsetWidth;
+
+                // Remove no-transition and activate spotlight
+                this.classList.remove('no-transition');
+                requestAnimationFrame(() => {
+                    if (isActive) this.classList.add('active');
+                });
+            });
+
+            heroTitle.addEventListener('mousemove', function (e) {
+                if (!isActive) return;
+                const rect = this.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                this.style.setProperty('--x', x + '%');
+                this.style.setProperty('--y', y + '%');
+            });
+
+            heroTitle.addEventListener('mouseleave', function () {
+                isActive = false;
+                this.classList.remove('active');
+            });
+        }
+
+        // 6. Video Demo Modal Functions
+        function openDemo() {
+            const modal = document.getElementById('demoModal');
+            const video = document.getElementById('demoVideo');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            video.play();
+        }
+
+        function closeDemo() {
+            const modal = document.getElementById('demoModal');
+            const video = document.getElementById('demoVideo');
+            video.pause();
+            video.currentTime = 0;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeDemo();
+                closeExperience();
+                closePrivacy();
+                closeTerms();
+                closeContact();
+            }
+        });
+
+        // 7. Experience Video Modal Functions
+        function openExperience() {
+            const modal = document.getElementById('experienceModal');
+            const video = document.getElementById('experienceVideo');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Play video when modal opens
+            setTimeout(() => {
+                video.play();
+            }, 100);
+        }
+
+        function closeExperience() {
+            const modal = document.getElementById('experienceModal');
+            const video = document.getElementById('experienceVideo');
+            video.pause();
+            video.currentTime = 0; // Reset to beginning
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // 8. Footer Modal Functions
+        function openPrivacy() {
+            document.getElementById('privacyModal').classList.remove('hidden');
+            document.getElementById('privacyModal').classList.add('flex');
+        }
+
+        function closePrivacy() {
+            document.getElementById('privacyModal').classList.add('hidden');
+            document.getElementById('privacyModal').classList.remove('flex');
+        }
+
+        function openTerms() {
+            document.getElementById('termsModal').classList.remove('hidden');
+            document.getElementById('termsModal').classList.add('flex');
+        }
+
+        function closeTerms() {
+            document.getElementById('termsModal').classList.add('hidden');
+            document.getElementById('termsModal').classList.remove('flex');
+        }
+
+        function openContact() {
+            document.getElementById('contactModal').classList.remove('hidden');
+            document.getElementById('contactModal').classList.add('flex');
+        }
+
+        function closeContact() {
+            document.getElementById('contactModal').classList.add('hidden');
+            document.getElementById('contactModal').classList.remove('flex');
+        }
+
+        // 4. FAQ Accordion Logic
+        const acc = document.querySelectorAll('.faq-btn');
+
+        acc.forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Toggle active state icon
+                const icon = this.querySelector('i');
+                const content = this.nextElementSibling;
+
+                // Rotate icon
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.classList.remove('rotate-45');
+                    icon.style.transform = "rotate(0deg)";
+                } else {
+                    // Close others (optional - specific to this accordion style)
+                    document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                    document.querySelectorAll('.faq-btn i').forEach(i => i.style.transform = "rotate(0deg)");
+
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = "rotate(45deg)";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
