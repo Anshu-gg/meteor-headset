@@ -39,8 +39,8 @@
         /* Enhanced Scroll Animations */
         .fade-up {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(120px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .fade-up.visible {
@@ -50,8 +50,8 @@
 
         .fade-left {
             opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(-150px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .fade-left.visible {
@@ -61,8 +61,8 @@
 
         .fade-right {
             opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(150px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .fade-right.visible {
@@ -72,8 +72,8 @@
 
         .scale-up {
             opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: scale(0.7);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .scale-up.visible {
@@ -107,6 +107,7 @@
             background: linear-gradient(to right, #fff, #6b7280);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Hero Title with Spotlight Effect */
@@ -150,6 +151,63 @@
         .hero-title.active::before {
             clip-path: circle(40px at var(--x, 50%) var(--y, 50%));
         }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            transition: left 0.3s ease;
+            z-index: 100;
+            padding: 80px 24px 24px;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 99;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Font Sizes */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+        }
+
+        /* Desktop-only image shift */
+        @media (min-width: 768px) {
+            .scale-up .desktop-shift-up {
+                transform: translateY(-90px) !important;
+            }
+        }
     </style>
 </head>
 
@@ -166,40 +224,72 @@
             <a href="#contact" class="hover:text-white transition-colors">Contact</a>
         </div>
 
-        <a href="#pricing"
-            class="px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition-transform hover:scale-105">
-            Pre-Order
-        </a>
+        <div class="flex items-center gap-4">
+            <a href="#pricing"
+                class="hidden sm:block px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition-transform hover:scale-105">
+                Pre-Order
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none" aria-label="Menu">
+                <i class="ph ph-list text-3xl"></i>
+            </button>
+        </div>
     </nav>
 
-    <header class="relative min-h-screen flex flex-col justify-start items-center text-center px-4 pt-32 md:pt-40">
+    <!-- Mobile Overlay -->
+    <div id="mobileOverlay" class="mobile-overlay"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <button id="closeMobileMenu" class="absolute top-6 right-6 text-white focus:outline-none"
+            aria-label="Close Menu">
+            <i class="ph ph-x text-3xl"></i>
+        </button>
+
+        <nav class="flex flex-col space-y-6">
+            <a href="#features"
+                class="text-white text-lg font-medium hover:text-purple-400 transition-colors mobile-menu-link">Features</a>
+            <a href="#color"
+                class="text-white text-lg font-medium hover:text-purple-400 transition-colors mobile-menu-link">Color</a>
+            <a href="#specs"
+                class="text-white text-lg font-medium hover:text-purple-400 transition-colors mobile-menu-link">Specs</a>
+            <a href="#contact"
+                class="text-white text-lg font-medium hover:text-purple-400 transition-colors mobile-menu-link">Contact</a>
+            <hr class="border-neutral-800">
+            <a href="#pricing"
+                class="bg-white text-black text-center px-5 py-3 rounded-full font-semibold hover:bg-gray-200 transition-colors mobile-menu-link">Pre-Order</a>
+        </nav>
+    </div>
+
+    <header class="relative flex flex-col justify-start items-center text-center px-4 pt-32 md:pt-40 pb-8 md:pb-12">
         <div
             class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black z-0">
         </div>
 
         <div class="z-10 fade-up">
-            <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-4 hero-title" id="heroTitle"
+            <h1 class="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 hero-title" id="heroTitle"
                 data-text="Meteor">Meteor</h1>
-            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-lg">
+            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-base sm:text-lg px-4">
                 Industry-leading noise cancellation and stunning minimalist design. <span
-                    class="text-cyan-400 font-semibold">Precision.</span> <span
-                    class="text-orange-400 font-semibold">Power.</span> <span
-                    class="text-purple-400 font-semibold">Purity.</span>
+                    class="whitespace-nowrap"><span class="text-cyan-400 font-semibold">Precision.</span> <span
+                        class="text-orange-400 font-semibold">Power.</span> <span
+                        class="text-purple-400 font-semibold">Purity.</span></span>
             </p>
         </div>
 
-        <div class="relative w-full max-w-4xl mt-12 z-10 fade-up delay-200">
+        <div class="relative w-full max-w-4xl mt-6 md:mt-8 z-10 fade-up delay-200 px-4">
             <img id="hero-headphones" src="balck.png" alt="Meteor Headphones"
                 class="w-full h-auto object-contain rounded-3xl shadow-2xl shadow-white/5 mx-auto hover:scale-[1.02] transition-transform duration-700"
                 style="max-height: 500px;">
-            <div class="absolute bottom-10 right-10 text-xs text-gray-500 text-right hidden md:block">
-                SHIPS STARTING <span class="text-white font-bold">JULY 15</span><br>
-                LIMITED QUANTITIES AVAILABLE
+            <div class="absolute bottom-4 sm:bottom-10 right-4 sm:right-10 text-xs text-gray-500 text-right">
+                SHIPS STARTING <span class="text-white font-bold">JULY 15</span><br class="hidden sm:block">
+                <span class="hidden sm:inline">LIMITED QUANTITIES AVAILABLE</span>
             </div>
         </div>
     </header>
 
-    <section class="py-24 px-6 md:px-12 bg-black">
+    <section class="py-8 md:py-10 px-6 md:px-12 bg-black">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div class="relative h-[600px] overflow-hidden rounded-3xl fade-left">
                 <img src="https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=2070&auto=format&fit=crop"
@@ -207,7 +297,7 @@
             </div>
             <div class="fade-right">
                 <span class="text-sm font-bold text-purple-500 tracking-widest uppercase mb-2 block">Meet Meteor</span>
-                <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6">
                     Premium wireless headphones that blend precision, power, and comfort.
                 </h2>
                 <p class="text-gray-400 text-lg leading-relaxed">
@@ -218,12 +308,13 @@
         </div>
     </section>
 
-    <section id="features" class="py-24 px-6 md:px-12 bg-neutral-950">
+    <section id="features" class="py-8 md:py-10 px-6 md:px-12 bg-neutral-950">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold mb-16 fade-up">Every Note. Exactly As It<br>Was Meant to Be Heard.
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 fade-up">Every Note. Exactly As It<br
+                    class="hidden sm:block">Was Meant to Be Heard.
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
+            <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 sm:gap-6 h-auto md:h-[800px]">
 
                 <div
                     class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl bg-neutral-900 border border-neutral-800 fade-up">
@@ -262,43 +353,56 @@
     </section>
 
     <section id="color" class="py-24 px-6 md:px-12 bg-black overflow-hidden">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div class="fade-left">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header - Always on Top -->
+            <div class="mb-8 text-center md:text-left fade-up">
                 <span class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2 block">Design & Build</span>
-                <h2 class="text-5xl font-bold mb-6">Choose your Style.</h2>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Choose your Style.</h2>
                 <p class="text-gray-400 mb-8">Minimalist aesthetic meets industrial durability.</p>
-
-                <div class="space-y-4">
-                    <p id="color-name" class="text-xl font-medium text-white">Graphite Black</p>
-                    <div class="flex gap-4">
-                        <button onclick="changeColor('black')"
-                            class="w-10 h-10 rounded-full bg-neutral-900 border-2 border-white ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
-                            aria-label="Black"></button>
-                        <button onclick="changeColor('silver')"
-                            class="w-10 h-10 rounded-full bg-gray-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
-                            aria-label="Silver"></button>
-                        <button onclick="changeColor('gold')"
-                            class="w-10 h-10 rounded-full bg-amber-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
-                            aria-label="Gold"></button>
-                    </div>
-
-                    <!-- Watch Demo Button -->
-                    <button onclick="openDemo()"
-                        class="mt-8 w-full flex items-center justify-center gap-2 text-white border border-white/20 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-semibold">
-                        <i class="ph ph-play-circle text-xl"></i> Watch Demo
-                    </button>
-
-                    <!-- Experience Yourself Button -->
-                    <button onclick="openExperience()"
-                        class="mt-2.5 w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full transition-colors font-semibold">
-                        <i class="ph ph-rocket-launch text-xl"></i> Experience Yourself
-                    </button>
-                </div>
             </div>
 
-            <div class="relative h-[500px] flex items-center justify-center scale-up">
-                <img id="product-display" src="balck.png" alt="Headphones"
-                    class="w-[400px] h-[400px] object-cover rounded-3xl drop-shadow-[0_20px_50px_rgba(255,255,255,0.1)]">
+            <!-- Grid: Mobile = 1 column (image→colors→buttons), Desktop = 2 columns (text left, image right) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+                <!-- Left Column on Desktop (Order 1 on both) - Text & Controls -->
+                <div class="order-2 md:order-1 fade-left">
+                    <!-- Color Picker -->
+                    <div class="mb-6 text-center md:text-left">
+                        <p id="color-name" class="text-xl font-medium text-white mb-4">Graphite Black</p>
+                        <div class="flex gap-4 justify-center md:justify-start">
+                            <button onclick="changeColor('black')"
+                                class="w-12 h-12 rounded-full bg-neutral-900 border-2 border-white ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                                aria-label="Black"></button>
+                            <button onclick="changeColor('silver')"
+                                class="w-12 h-12 rounded-full bg-gray-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                                aria-label="Silver"></button>
+                            <button onclick="changeColor('gold')"
+                                class="w-12 h-12 rounded-full bg-amber-200 border-2 border-transparent ring-2 ring-transparent transition-all hover:scale-110 focus:ring-purple-500 focus:outline-none color-btn"
+                                aria-label="Gold"></button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3 md:mt-20">
+                        <!-- Watch Demo Button -->
+                        <button onclick="openDemo()"
+                            class="w-full flex items-center justify-center gap-2 text-white border border-white/20 px-6 py-3 rounded-full hover:bg-white/10 transition-colors font-semibold">
+                            <i class="ph ph-play-circle text-xl"></i> Watch Demo
+                        </button>
+
+                        <!-- Experience Yourself Button -->
+                        <button onclick="openExperience()"
+                            class="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full transition-colors font-semibold">
+                            <i class="ph ph-rocket-launch text-xl"></i> Experience Yourself
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column on Desktop (Order 1 on mobile, Order 2 on desktop) - Image -->
+                <div class="order-1 md:order-2 relative flex items-center justify-center scale-up">
+                    <img id="product-display" src="balck.png" alt="Headphones"
+                        class="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] object-cover rounded-3xl drop-shadow-[0_20px_50px_rgba(255,255,255,0.1)] desktop-shift-up">
+                </div>
             </div>
         </div>
     </section>
@@ -354,39 +458,43 @@
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16 fade-up">
                 <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Technical Specifications</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-2">Engineered to Perform</h2>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mt-2">Engineered to Perform</h2>
             </div>
 
             <div class="border-t border-neutral-800 fade-up">
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Driver Size</span>
-                    <span class="text-white font-semibold">40mm Titanium-Coated Dynamic Drivers</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Driver Size</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">40mm Titanium-Coated
+                        Dynamic Drivers</span>
                 </div>
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Frequency Response</span>
-                    <span class="text-white font-semibold">10Hz - 40kHz</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Frequency Response</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">10Hz - 40kHz</span>
                 </div>
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Bluetooth Version</span>
-                    <span class="text-white font-semibold">5.3 with Multipoint Connectivity</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Bluetooth Version</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">5.3 with Multipoint
+                        Connectivity</span>
                 </div>
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Noise Cancellation</span>
-                    <span class="text-white font-semibold">Hybrid ANC (up to 45dB)</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Noise Cancellation</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">Hybrid ANC (up to
+                        45dB)</span>
                 </div>
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Battery Life</span>
-                    <span class="text-white font-semibold">40h (ANC On), 60h (ANC Off)</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Battery Life</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">40h (ANC On), 60h (ANC
+                        Off)</span>
                 </div>
                 <div
-                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4">
-                    <span class="text-gray-400 font-medium">Weight</span>
-                    <span class="text-white font-semibold">260g</span>
+                    class="flex flex-col md:flex-row justify-between py-6 border-b border-neutral-800 hover:bg-neutral-900/50 transition-colors px-4 gap-2">
+                    <span class="text-gray-400 font-medium text-sm sm:text-base">Weight</span>
+                    <span class="text-white font-semibold text-sm sm:text-base md:text-right">260g</span>
                 </div>
             </div>
         </div>
@@ -394,7 +502,7 @@
 
     <section class="py-24 px-6 md:px-12 bg-black">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-up">Loved by Audiophiles</h2>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 fade-up">Loved by Audiophiles</h2>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-neutral-900 p-8 rounded-2xl text-left border border-neutral-800 fade-up delay-100">
@@ -450,7 +558,7 @@
 
     <section class="py-24 px-6 md:px-12 bg-neutral-950">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center fade-up">Got Questions?</h2>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center fade-up">Got Questions?</h2>
 
             <div class="space-y-4 fade-up">
                 <div class="border border-neutral-800 rounded-lg bg-black overflow-hidden">
@@ -500,7 +608,7 @@
     <section id="pricing" class="py-24 px-6 md:px-12 bg-black">
         <div class="max-w-xl mx-auto text-center fade-up">
             <span class="text-purple-500 font-bold tracking-widest uppercase text-sm">Pricing</span>
-            <h2 class="text-5xl font-bold mt-2 mb-6">Pre-order opens soon</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Pre-order opens soon</h2>
             <p class="text-gray-400 mb-8">Be the first to know when pricing goes live. Use the contact form below to get
                 notified.</p>
 
@@ -529,15 +637,17 @@
     </section>
 
     <!-- Privacy Policy Modal -->
-    <div id="privacyModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
-        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
-            <div class="sticky top-0 bg-neutral-900 p-6 border-b border-neutral-800 flex justify-between items-center">
-                <h2 class="text-3xl font-bold">Privacy Policy</h2>
+    <div id="privacyModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-4 sm:p-6">
+        <div
+            class="relative w-full max-w-4xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto">
+            <div
+                class="sticky top-0 bg-neutral-900 p-4 sm:p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold">Privacy Policy</h2>
                 <button onclick="closePrivacy()" class="text-gray-400 hover:text-white transition-colors">
                     <i class="ph ph-x text-2xl"></i>
                 </button>
             </div>
-            <div class="p-6 space-y-6 text-gray-300">
+            <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 text-gray-300 text-sm sm:text-base">
                 <p class="text-sm text-gray-500">Last updated: February 2, 2026</p>
 
                 <section>
@@ -569,15 +679,17 @@
     </div>
 
     <!-- Terms of Service Modal -->
-    <div id="termsModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
-        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
-            <div class="sticky top-0 bg-neutral-900 p-6 border-b border-neutral-800 flex justify-between items-center">
-                <h2 class="text-3xl font-bold">Terms of Service</h2>
+    <div id="termsModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-4 sm:p-6">
+        <div
+            class="relative w-full max-w-4xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto">
+            <div
+                class="sticky top-0 bg-neutral-900 p-4 sm:p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold">Terms of Service</h2>
                 <button onclick="closeTerms()" class="text-gray-400 hover:text-white transition-colors">
                     <i class="ph ph-x text-2xl"></i>
                 </button>
             </div>
-            <div class="p-6 space-y-6 text-gray-300">
+            <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 text-gray-300 text-sm sm:text-base">
                 <p class="text-sm text-gray-500">Last updated: February 2, 2026</p>
 
                 <section>
@@ -608,15 +720,16 @@
     </div>
 
     <!-- Contact Modal -->
-    <div id="contactModal" class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-6">
-        <div class="relative w-full max-w-4xl mx-4 bg-neutral-900 rounded-2xl shadow-2xl">
-            <div class="p-6 border-b border-neutral-800 flex justify-between items-center">
-                <h2 class="text-3xl font-bold">Get In Touch</h2>
+    <div id="contactModal"
+        class="fixed inset-0 bg-black/95 z-[1000] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="relative w-full max-w-4xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl my-8">
+            <div class="p-4 sm:p-6 border-b border-neutral-800 flex justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold">Get In Touch</h2>
                 <button onclick="closeContact()" class="text-gray-400 hover:text-white transition-colors">
                     <i class="ph ph-x text-2xl"></i>
                 </button>
             </div>
-            <div class="p-6 grid md:grid-cols-2 gap-8">
+            <div class="p-4 sm:p-6 grid md:grid-cols-2 gap-6 sm:gap-8">
                 <!-- Contact Information -->
                 <div class="space-y-6">
                     <div>
@@ -698,14 +811,16 @@
     <script>
         // 1. Scroll Animations (Intersection Observer)
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+            threshold: 0.05,
+            rootMargin: "0px 0px 50px 0px"
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
                 }
             });
         }, observerOptions);
@@ -881,6 +996,44 @@
             document.getElementById('contactModal').classList.add('hidden');
             document.getElementById('contactModal').classList.remove('flex');
         }
+
+        // 9. Mobile Menu Functions
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+        }
+
+        if (closeMobileMenuBtn) {
+            closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+        }
+
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // Close mobile menu when clicking on a link
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
 
         // 4. FAQ Accordion Logic
         const acc = document.querySelectorAll('.faq-btn');
